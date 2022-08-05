@@ -2,9 +2,9 @@ package main
 
 import (
 	"bytes"
+	"compress/gzip"
 	"context"
 	"fmt"
-	"io"
 	"log"
 
 	"example.com/s3update/types"
@@ -53,20 +53,16 @@ func GetWarc(
 func getBytes(resp *s3.GetObjectOutput) ([]byte, error) {
 	defer resp.Body.Close()
 	log.Printf("ContentLength %d", resp.ContentLength)
-	var bbuffer bytes.Buffer
-	buffer := make([]byte, resp.ContentLength)
-	for {
-		num, rerr := resp.Body.Read(buffer)
-		if num > 0 {
-			_, werr := bbuffer.Write(buffer[:num])
-			if werr != nil {
-				return nil, fmt.Errorf("error writing response to a buffer: %s", werr)
-			}
-		} else if rerr == io.EOF {
-			break
-		} else if rerr != nil {
-			return nil, fmt.Errorf("error reading response: %s", rerr)
-		}
+	reader, err := gzip.NewReader(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error decompressing gzip: %s", err)
 	}
+
+	var bbuffer bytes.Buffer
+	_, err = bbuffer.ReadFrom(reader)
+	if err != nil {
+		return nil, fmt.Errorf("error reading gzip: %s", err)
+	}
+
 	return bbuffer.Bytes(), nil
 }

@@ -41,7 +41,7 @@ func DownloadWarc(
 			return fmt.Errorf("error getting warc: %s", err)
 		}
 
-		key := fmt.Sprintf("warc_segment/%s/%d.warc.gz", path, i)
+		key := fmt.Sprintf("warc_segment/%s/%d.warc", path, i)
 		log.Printf("Uploading %s", key)
 		_, err = s3Client.PutObject(
 			ctx,
