@@ -6,11 +6,6 @@ resource "aws_s3_bucket" "bucket" {
   }
 }
 
-resource "aws_s3_bucket_acl" "bucket_acl" {
-  bucket = aws_s3_bucket.bucket.id
-  acl    = "private"
-}
-
 resource "aws_lambda_permission" "lambda_s3_permission" {
   statement_id  = "AllowS3Invoke"
   action        = "lambda:InvokeFunction"
