@@ -38,6 +38,10 @@ LIMIT 1
 
 Alternatively you can also upload such a query to s3://your_bucket/queries and it will be executed, triggering the creation of the results file, which will trigger the download of warc files
 
+# relevant articles
+
+* [Open the Athena query editor in the us-east-1 region where all the Common Crawl data is located](https://commoncrawl.org/blog/index-to-warc-files-and-urls-in-columnar-format)
+* [Exploring Common Crawl with Athena](https://skeptric.com/common-crawl-index-athena/)
 
 # supported flows
 
