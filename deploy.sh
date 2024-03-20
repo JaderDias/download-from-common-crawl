@@ -16,7 +16,7 @@ echo "+++++ build go packages +++++"
 
 cd golang/s3update
 go get
-env GOOS=linux GOARCH=amd64 go build -o ../../bin/s3update/s3update
+env GOOS=linux GOARCH=amd64 go build -o ../../bin/s3update/bootstrap
 if [ $? -ne 0 ]
 then
     echo "build s3update packages failed"

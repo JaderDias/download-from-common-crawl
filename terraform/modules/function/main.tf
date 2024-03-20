@@ -10,7 +10,7 @@ resource "aws_lambda_function" "myfunc" {
   role             = aws_iam_role.iam_for_terraform_lambda.arn
   handler          = var.lambda_handler
   source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
-  runtime          = "go1.x"
+  runtime          = "provided.al2023"
   timeout          = 30
   tags             = var.tags
 
